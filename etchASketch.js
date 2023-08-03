@@ -2,7 +2,8 @@ const COLOR_SPACE_SIZE = 256;
 const COLORING_MODE = {
     BLACK: 0,
     RAINBOW: 1,
-    ERASER: 2 
+    GRADIENT: 2,
+    ERASER: 3 
 }
 
 const boardDiv = document.querySelector(".board");
@@ -10,12 +11,14 @@ const sizeSliderValue = document.querySelector(".size-selector > .size-value");
 const sizeSlider = document.querySelector("input");
 const blackButton = document.querySelector("button.black");
 const rainbowButton = document.querySelector("button.rainbow");
+const gradientButton = document.querySelector("button.gradient");
 const eraserButton = document.querySelector("button.eraser");
 const colorOptionsButtonList = [blackButton, rainbowButton, eraserButton];
 const clearButton = document.querySelector("button.clear");
 
 let coloringValue = COLORING_MODE.BLACK;
 let mousePressed = false;
+let gradientValue = 0; // incrementally make the pen darker (starting at white)
 
 function getTileWidth(tilesPerRow) {
     return Math.floor(boardDiv.clientWidth / tilesPerRow);
@@ -31,6 +34,13 @@ function assignNewColor(event) {
             g = Math.floor(Math.random() * COLOR_SPACE_SIZE),
             b = Math.floor(Math.random() * COLOR_SPACE_SIZE);
         newColor = `rgb(${r},${g},${b})`;
+    } else if (coloringValue === COLORING_MODE.GRADIENT) {
+        let totalTiles = (sizeSlider.value) ** 2;
+        let gradientPercent = Math.max(0, 1-(gradientValue/totalTiles));
+        newColor = `rgb(${Math.floor(gradientPercent*255)},
+                        ${Math.floor(gradientPercent*255)}, 
+                        ${Math.floor(gradientPercent*255)})`;
+        gradientValue += 1;
     } else if (coloringValue === COLORING_MODE.ERASER) {
         newColor = "white";
     }
@@ -69,6 +79,7 @@ function handleButtonPress(buttonPressed, newColor) {
 function hookUpListeners() {
     blackButton.addEventListener("click", () => handleButtonPress(blackButton, COLORING_MODE.BLACK));
     rainbowButton.addEventListener("click", () => handleButtonPress(rainbowButton, COLORING_MODE.RAINBOW));
+    gradientButton.addEventListener("click", () => handleButtonPress(gradientButton, COLORING_MODE.GRADIENT));
     eraserButton.addEventListener("click", () => handleButtonPress(eraserButton, COLORING_MODE.ERASER));
     clearButton.addEventListener("click", () => setUpEtchASketch(sizeSlider.value));
     // Avoid needing to click every pixel. Makes it so clicking and dragging continues to draw
@@ -78,6 +89,7 @@ function hookUpListeners() {
 }
 
 function setUpEtchASketch(tilesPerRow) {
+    gradientValue = 0;
     boardDiv.replaceChildren([]); // delete existing board (if any)
     generateGrid(tilesPerRow);
     hookUpListeners();
