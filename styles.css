@@ -10,3 +10,14 @@ html, body, .board {
     height: 1200px;
     border: 10px red solid;
 }
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.tile {
+    background-color: "white";
+}

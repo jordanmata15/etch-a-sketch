@@ -1,46 +1,46 @@
+const COLOR_SPACE_SIZE = 256;
+
 const boardDiv = document.querySelector(".board");
 
-function getExpectedWidth(dimension) {
-    return Math.floor(boardDiv.clientWidth / dimension);
+let mousePressed = false;
+document.body.onmousedown = () => (mousePressed = true)
+document.body.onmouseup = () => (mousePressed = false)
+
+
+function getTileWidth(tilesPerRow) {
+    return Math.floor(boardDiv.clientWidth / tilesPerRow);
 }
 
-function generateTile(dimension, index) {
-    let expectedSize = getExpectedWidth(dimension);
+function assignNewColor(event) {
+    let tile = event.target;
+    if (event.type === "mouseover" && !mousePressed) return;
+    tile.style["background-color"] = "black";
+}
+
+function generateTile(tilesPerRow) {
+    let tileSize = getTileWidth(tilesPerRow);
     let tile = document.createElement('div');
-    tile.classList.add("tile", "column", "col-" + index);
-    tile.style["width"] = expectedSize + "px";
-    tile.style["height"] = expectedSize + "px";
-    tile.style["display"] = "flex"; 
-    tile.style["justify-content"] = "center";
-    tile.style["align-items"] = "center";
-    tile.style["flex-direction"] = "row";
-    tile.textContent = index;
+    tile.classList.add("tile");
+    tile.style["width"] = tileSize + "px";
+    tile.style["height"] = tileSize + "px";
+    tile.addEventListener('mousedown', assignNewColor);
+    tile.addEventListener('mouseover', assignNewColor);
     return tile;
 }
 
-function addRowStyle(row) {
-    row.style["display"] = "flex";
-    row.style["justify-content"] = "center";
-    row.style["align-items"] = "center";
-    row.style["flex-direction"] = "row";
-    return row;
-}
-
-function createGrid(dimension) {
+function createGrid(tilesPerRow) {
     let rowI;
     let colJ;
-    for (let i = 0; i < dimension; ++i) {
+    for (let i = 0; i < tilesPerRow; ++i) {
         rowI = document.createElement('div');
-        rowI.classList.add("tile", "row", "row-" + i);
-        for (let j = 0; j < dimension; ++j) {
-            colJ = generateTile(dimension, j);
+        rowI.classList.add("row");
+        for (let j = 0; j < tilesPerRow; ++j) {
+            colJ = generateTile(tilesPerRow, j);
             rowI.appendChild(colJ);
-            
         }
-        rowI = addRowStyle(rowI);
         boardDiv.appendChild(rowI);
     }
 }
 
-let gridSize = prompt("Please enter a size for number of squares on each side of the grid:");
-createGrid(gridSize);
+let tilesPerRow = prompt("Please enter a size for number of squares on each side of the grid:");
+createGrid(tilesPerRow);
