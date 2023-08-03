@@ -1,14 +1,16 @@
 :root {
     --default-canvas-size: 1000px;
-    --button-element-height: 100px;
-    --button-element-width: 200px;
-    --options-width: 600px;
-    --slider-thumb-size: 50px;
+    --button-element-height: 75px;
+    --button-element-width: 125px;
+    --options-height: 500px;
+    --options-width: 500px;
+    --slider-thumb-size: 30px;
 }
 
 html,
 body,
 .board-content,
+.menu,
 .board,
 .row {
     display: flex;
@@ -19,20 +21,26 @@ body,
 body {
     flex-direction: column;
     gap: 50px;
+    margin-top: 50px;
 }
 
 .board-content {
     gap: 50px;
 }
 
+.menu {
+    flex-direction: column;
+}
+
 h1 {
-    font-size: 100px;
+    font-size: 75px;
+    margin-bottom: 100px;
 }
 
 button {
     height: var(--button-element-height);
     width: var(--button-element-width);
-    font-size: 25px;
+    font-size: 20px;
     border-radius: 10px;
     background-color: white;
     box-shadow: 10px 10px 10px lightgrey;
@@ -62,7 +70,7 @@ input[type='range'] {
 
 input[type='range']::-webkit-slider-runnable-track {
     width: var(--options-width);
-    height: 15px;
+    height: 10px;
     background: lightgrey;
     border-radius: 5px;
 }
@@ -71,7 +79,7 @@ input[type='range']::-webkit-slider-thumb {
     position: relative;
     height: var(--slider-thumb-size);
     width: var(--slider-thumb-size);
-    margin-top: -15px;
+    margin-top: -10px;
     background: black;
     border-radius: 50%;
     box-shadow: 5px 5px 5px grey;
@@ -86,13 +94,11 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 .options {
-    height: var(--default-canvas-size);
-    width: auto;
-    gap: 50px;
+    height: var(--options-width);
 }
 
 .size-value {
-    font-size: 50px;
+    font-size: 30px;
 }
 
 .board {

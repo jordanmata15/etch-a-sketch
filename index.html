@@ -10,24 +10,26 @@
 </head>
 
 <body>
-    <h1>Etch-A-Sketch</h1>
     <div class="board-content">
-        <div class="options">
-            <div class="coloring-options">
-                <button class="black pressed">BLACK</button>
-                <button class="rainbow">RAINBOW</button>
-                <button class="gradient">GRADIENT</button>
-                <button class="eraser">ERASER</button>
+        <div class="menu">
+            <h1>Etch-A-Sketch</h1>
+            <div class="options">
+                <div class="coloring-options">
+                    <button class="black pressed">BLACK</button>
+                    <button class="rainbow">RAINBOW</button>
+                    <button class="gradient">GRADIENT</button>
+                    <button class="eraser">ERASER</button>
+                </div>
+                <div class="size-selector">
+                    <div class="size-value"></div>
+                    <input class="slider" type="range" min="1" max="100" value="50">
+                </div>
+                <button class="clear">CLEAR</button>
             </div>
-            <div class="size-selector">
-                <div class="size-value"></div>
-                <input class="slider" type="range" min="1" max="100" value="50">
-            </div>
-            <button class="clear">CLEAR</button>
         </div>
         <div class="board">
         </div>
-    </div>>
+    </div>
 
 </body>
 
