@@ -1,0 +1,12 @@
+html, body, .board {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.board {
+    flex-direction: column;
+    width: 1200px;
+    height: 1200px;
+    border: 10px red solid;
+}
