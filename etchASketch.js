@@ -6,9 +6,13 @@ const COLORING_MODE = {
 }
 
 const boardDiv = document.querySelector(".board");
+const sizeSliderValue = document.querySelector(".size-selector > .size-value");
+const sizeSlider = document.querySelector("input");
 const blackButton = document.querySelector("button.black");
 const rainbowButton = document.querySelector("button.rainbow");
 const eraserButton = document.querySelector("button.eraser");
+const colorOptionsButtonList = [blackButton, rainbowButton, eraserButton];
+const clearButton = document.querySelector("button.clear");
 
 let coloringValue = COLORING_MODE.BLACK;
 let mousePressed = false;
@@ -44,7 +48,7 @@ function generateTile(tilesPerRow) {
     return tile;
 }
 
-function createGrid(tilesPerRow) {
+function generateGrid(tilesPerRow) {
     for (let i = 0; i < tilesPerRow; ++i) {
         let rowI = document.createElement('div');
         rowI.classList.add("row");
@@ -56,20 +60,37 @@ function createGrid(tilesPerRow) {
     }
 }
 
+function handleButtonPress(buttonPressed, newColor) {
+    colorOptionsButtonList.forEach(button => button.classList.remove('pressed'))
+    buttonPressed.classList.add('pressed');
+    coloringValue = newColor;
+}
+
 function hookUpListeners() {
-    blackButton.addEventListener("click", () => coloringValue = COLORING_MODE.BLACK);
-    rainbowButton.addEventListener("click", () => coloringValue = COLORING_MODE.RAINBOW);
-    eraserButton.addEventListener("click", () => coloringValue = COLORING_MODE.ERASER);
+    blackButton.addEventListener("click", () => handleButtonPress(blackButton, COLORING_MODE.BLACK));
+    rainbowButton.addEventListener("click", () => handleButtonPress(rainbowButton, COLORING_MODE.RAINBOW));
+    eraserButton.addEventListener("click", () => handleButtonPress(eraserButton, COLORING_MODE.ERASER));
+    clearButton.addEventListener("click", () => setUpEtchASketch(sizeSlider.value));
     // Avoid needing to click every pixel. Makes it so clicking and dragging continues to draw
     boardDiv.addEventListener("mousedown", () => (mousePressed = true));
     boardDiv.addEventListener("mouseup", () => (mousePressed = false));
     boardDiv.addEventListener('mouseleave', () => mousePressed = false);
 }
 
-function setUpEtchASketch() {
-    let tilesPerRow = prompt("Please enter a size for number of squares on each side of the grid:");
-    createGrid(tilesPerRow);
+function setUpEtchASketch(tilesPerRow) {
+    boardDiv.replaceChildren([]); // delete existing board (if any)
+    generateGrid(tilesPerRow);
     hookUpListeners();
 }
 
-setUpEtchASketch();
+// show the size as the user slides the bar
+sizeSlider.addEventListener("input", () => {
+    sizeSliderValue.textContent = sizeSlider.value + " x " + sizeSlider.value;
+});
+// wait until user releases mouse click to actually generate the grid
+sizeSlider.addEventListener("mouseup", () => {
+    setUpEtchASketch(sizeSlider.value);
+});
+
+sizeSliderValue.textContent = sizeSlider.value + " x " + sizeSlider.value;
+setUpEtchASketch(sizeSlider.value);

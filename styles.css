@@ -1,29 +1,111 @@
-html, body, .board {
+:root {
+    --default-canvas-size: 1000px;
+    --button-element-height: 100px;
+    --button-element-width: 200px;
+    --options-width: 600px;
+    --slider-thumb-size: 50px;
+}
+
+html,
+body,
+.board-content,
+.board,
+.row {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+body {
+    flex-direction: column;
+    gap: 50px;
+}
+
+.board-content {
+    gap: 50px;
+}
+
+h1 {
+    font-size: 100px;
+}
+
 button {
-    height: 100px;
-    width: 200px;
+    height: var(--button-element-height);
+    width: var(--button-element-width);
     font-size: 25px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 10px 10px 10px lightgrey;
+}
+
+button:hover {
+    background-color: lightgrey;
+}
+
+button.pressed {
+    background-color: white;
+    color: black;
+    box-shadow: 10px 10px 10px rgb(146, 146, 146) inset;
+}
+
+input[type='range'],
+input[type='range']::-webkit-slider-runnable-track,
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+
+input[type='range'] {
+    width: var(--options-width);
+    height: 50px;
+    cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+    width: var(--options-width);
+    height: 15px;
+    background: lightgrey;
+    border-radius: 5px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    position: relative;
+    height: var(--slider-thumb-size);
+    width: var(--slider-thumb-size);
+    margin-top: -15px;
+    background: black;
+    border-radius: 50%;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.options,
+.size-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.options {
+    height: var(--default-canvas-size);
+    width: auto;
+    gap: 50px;
+}
+
+.size-value {
+    font-size: 50px;
 }
 
 .board {
     flex-direction: column;
-    width: 1200px;
-    height: 1200px;
-    border: 10px red solid;
+    width: var(--default-canvas-size);
+    height: var(--default-canvas-size);
+    border: 10px black solid;
 }
 
 .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: row;
 }
 
 .tile {
-    background-color: "white";
+    background-color: white;
 }
