@@ -13,7 +13,7 @@ const blackButton = document.querySelector("button.black");
 const rainbowButton = document.querySelector("button.rainbow");
 const gradientButton = document.querySelector("button.gradient");
 const eraserButton = document.querySelector("button.eraser");
-const colorOptionsButtonList = [blackButton, rainbowButton, eraserButton];
+const colorOptionsButtonList = [blackButton, rainbowButton, eraserButton, gradientButton];
 const clearButton = document.querySelector("button.clear");
 
 let coloringValue = COLORING_MODE.BLACK;
@@ -71,8 +71,10 @@ function generateGrid(tilesPerRow) {
 }
 
 function handleButtonPress(buttonPressed, newColor) {
-    colorOptionsButtonList.forEach(button => button.classList.remove('pressed'))
-    buttonPressed.classList.add('pressed');
+    colorOptionsButtonList.forEach(b => b.classList.remove('pressed'));
+    if (!buttonPressed.classList.contains('pressed')) {
+        buttonPressed.classList.add('pressed');
+    }
     coloringValue = newColor;
 }
 

@@ -47,13 +47,15 @@ button {
 }
 
 button:hover {
-    background-color: lightgrey;
+    color: white;
+    background-color: rgb(62, 62, 255);
 }
 
 button.pressed {
-    background-color: white;
+    background-color: lightgrey;
     color: black;
-    box-shadow: 10px 10px 10px rgb(146, 146, 146) inset;
+    box-shadow: 0 0 5px rgb(146, 146, 146) inset;
+    outline: none;
 }
 
 input[type='range'],
